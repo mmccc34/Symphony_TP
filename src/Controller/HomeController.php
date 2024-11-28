@@ -35,6 +35,21 @@ class HomeController extends AbstractController
     {
         return $this->render('contact.html.twig');  
     }
+
+    // Route pour la page "Articles"
+    #[Route('/articles', name: 'app_articles')]
+    public function articles(): Response
+    {
+        $articles = 
+        [ 
+        [        'id' => 1,        'title' => 'Article 1',        'content' => 'Contenu de l\'article 1',  'date' => new \DateTime(),  ],    
+        [        'id' => 2,        'title' => 'Article 2',        'content' => 'Contenu de l\'article 2', 'date' => new \DateTime(),   ],    
+        [        'id' => 3,        'title' => 'Article 3',        'content' => 'Contenu de l\'article 3', 'date' => new \DateTime(),   ],];
+
+        return $this->render('articles.html.twig', [
+            'articles' => $articles, // Nom de la variable dans Twig
+        ]);
+    }
    
 
 }

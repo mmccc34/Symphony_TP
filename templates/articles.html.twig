@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Articles{% endblock %}
+
+{% block body %}
+
+{{parent()}}
+
+
+    <h1>Bienvenue sur la page Articles</h1>
+  
+    <ul>
+        {% for article in articles %}
+            <li>
+                <h2>{{ article.title |  escape('html') }}</h2>
+                <p>{{ article.content |  escape('html')}}</p>
+                <p><strong>Date de publication :</strong>
+                {{ article.date|date('d/m/Y') }}
+                </p>
+            </li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
