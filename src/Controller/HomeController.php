@@ -8,6 +8,14 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class HomeController extends AbstractController
 {
+
+    private static array  $articles = 
+    [ 
+    [        'id' => 1,        'title' => 'Article 1',        'content' => 'Contenu de l\'article 1',  'createAt' => '01/01/2024',  ],    
+    [        'id' => 2,        'title' => 'Article 2',        'content' => 'Contenu de l\'article 2', 'createAt' => '01/01/2024',   ],    
+    [        'id' => 3,        'title' => 'Article 3',        'content' => 'Contenu de l\'article 3', 'createAt' => '01/01/2024',   ],];
+
+
     #[Route('/home', name: 'app_home')]
     public function index(): Response
     {
@@ -40,14 +48,25 @@ class HomeController extends AbstractController
     #[Route('/articles', name: 'app_articles')]
     public function articles(): Response
     {
-        $articles = 
-        [ 
-        [        'id' => 1,        'title' => 'Article 1',        'content' => 'Contenu de l\'article 1',  'date' => new \DateTime(),  ],    
-        [        'id' => 2,        'title' => 'Article 2',        'content' => 'Contenu de l\'article 2', 'date' => new \DateTime(),   ],    
-        [        'id' => 3,        'title' => 'Article 3',        'content' => 'Contenu de l\'article 3', 'date' => new \DateTime(),   ],];
+        return $this->render('articles/articles.html.twig', [
+            'articles' => self::$articles,
+        ]);
+    }
 
-        return $this->render('articles.html.twig', [
-            'articles' => $articles, // Nom de la variable dans Twig
+   
+    #[Route('/articles/{id}', name: 'article_show')]
+    public function show(int $id): Response
+    {
+        $article = null;
+        foreach (self::$articles as $art) {
+            if ($art['id'] === $id) {
+                $article = $art;
+                break;
+            }
+        }
+        return $this->render('articles/show.html.twig', [
+            'controller_name' => 'HomeController',
+            'article' => $article,
         ]);
     }
    
